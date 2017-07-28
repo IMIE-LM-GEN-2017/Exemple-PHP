@@ -27,6 +27,9 @@ $sql = "SELECT * FROM adresses ORDER BY $ordreChamp $ordreDirection";
 $resultats = mysqli_query($connection, $sql);
 
 ?>
+<!-- Lien vers le formulaire -->
+<a href="adresses_new.php">Nouvelle adresse</a>
+
 <table class="table table-condensed table-striped table-hover">
   <thead>
     <tr>

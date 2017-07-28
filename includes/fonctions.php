@@ -27,3 +27,18 @@ function testOrderBy($listeDeChamps, $champParDefaut, $directionParDefaut){
 
   return [$champParDefaut, $directionParDefaut];
 }
+
+
+function tableHeaders($liste){
+  // [ 'id' => 'Id']
+  $out = '';
+  foreach($liste as $cle=>$valeur){
+    $out.= "<th>";
+    $out.=$valeur;
+    $out.="<a href=\"?order=$cle&amp;direction=ASC\">+</a>";
+    $out.="<a href=\"?order=$cle&amp;direction=DESC\">-</a>";
+    $out.= "</th>";
+  }
+
+  return $out;
+}

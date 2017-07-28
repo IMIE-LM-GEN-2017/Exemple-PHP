@@ -11,7 +11,13 @@ include('parties/header.php');
 
 // Liste des champs sur lesquels on peut trier
 $champsTriables= ['id', 'nom', 'surface', 'id_adresse', 'id_dirigeant'];
-
+$listeDesChamps= [
+  "id" => "ID",
+  "nom" => "Nom",
+  "surface" => "Surface",
+  "id_adresse" => "Adresse",
+  "id_dirigeant" => "Dirigeant",
+];
 // Test de $_GET
 $ordreDeTri = testOrderBy($champsTriables, 'nom', 'ASC');
 
@@ -26,31 +32,7 @@ $resultats = mysqli_query($connection, $sql);
 <table class="table table-condensed table-striped table-hover">
   <thead>
     <tr>
-      <th>
-        id
-        <a href="index.php?order=id&amp;direction=ASC">+</a>
-        <a href="index.php?order=id&amp;direction=DESC">-</a>
-      </th>
-      <th>
-        nom
-        <a href="index.php?order=nom&amp;direction=ASC">+</a>
-        <a href="index.php?order=nom&amp;direction=DESC">-</a>
-      </th>
-      <th>
-        surface
-        <a href="index.php?order=surface&amp;direction=ASC">+</a>
-        <a href="index.php?order=surface&amp;direction=DESC">-</a>
-      </th>
-      <th>
-        id_adresse
-        <a href="index.php?order=id_adresse&amp;direction=ASC">+</a>
-        <a href="index.php?order=id_adresse&amp;direction=DESC">-</a>
-      </th>
-      <th>
-        id_dirigeant
-        <a href="index.php?order=id_dirigeant&amp;direction=ASC">+</a>
-        <a href="index.php?order=id_dirigeant&amp;direction=DESC">-</a>
-      </th>
+      <?= tableHeaders($listeDesChamps) ?>
     </tr>
   </thead>
   <tbody>
@@ -64,11 +46,11 @@ $resultats = mysqli_query($connection, $sql);
         //var_dump($ligne);
       ?>
       <tr>
-        <td><?= $ligne['id'] ?></td>
-        <td><?= $ligne['nom'] ?></td>
-        <td><?= $ligne['surface'] ?></td>
-        <td><?= $ligne['id_adresse'] ?></td>
-        <td><?= $ligne['id_dirigeant'] ?></td>
+        <?php
+        foreach ($listeDesChamps as $cle => $valeur) {
+          echo "<td>".$ligne[$cle] ."</td>";
+        }
+        ?>
       </tr>
       <?php
       endwhile;

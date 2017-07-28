@@ -27,7 +27,7 @@ $resultats = mysqli_query($connection, $sql);
   <thead>
     <tr>
       <th>
-        id
+        Id
         <a href="?order=id&amp;direction=ASC">+</a>
         <a href="?order=id&amp;direction=DESC">-</a>
       </th>
