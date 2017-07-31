@@ -23,9 +23,11 @@ $sql = "SELECT * FROM dirigeants ORDER BY $ordreChamp $ordreDirection";
 
 $resultats = mysqli_query($connection, $sql);
 ?>
+<a href="dirigeants_new.php">Nouveau dirigeant</a>
 <table class="table table-condensed table-striped table-hover">
   <thead>
     <tr>
+      <th>Actions</th>
       <th>
         Id
         <a href="?order=id&amp;direction=ASC">+</a>
@@ -68,6 +70,14 @@ $resultats = mysqli_query($connection, $sql);
         //var_dump($ligne);
       ?>
       <tr>
+        <td>
+          <a href="dirigeants_delete.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
+            <span class="glyphicon glyphicon-trash"></span>
+          </a>
+          <a href="dirigeants_edit.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </td>
         <td><?= $ligne['id'] ?></td>
         <td><?= $ligne['nom'] ?></td>
         <td><?= $ligne['prenom'] ?></td>
