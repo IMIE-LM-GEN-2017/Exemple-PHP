@@ -19,9 +19,28 @@ $ordreDeTri = testOrderBy($champsTriables, 'nom', 'ASC');
 $ordreChamp = $ordreDeTri[0];
 $ordreDirection = $ordreDeTri[1];
 
-$sql = "SELECT * FROM dirigeants ORDER BY $ordreChamp $ordreDirection";
+//$sql = "SELECT d.id, d.nom, d.prenom, d.email, d.tel, d.id_adresse, count(f.id) as nb_fermes FROM dirigeants d LEFT JOIN fermes f ON d.id=f.id_dirigeant GROUP BY d.id ORDER BY $ordreChamp $ordreDirection";
+
+$sql="
+  SELECT d.id, d.nom, d.prenom, d.id_adresse, d.tel, d.email, count(f.id) nb_fermes
+  FROM dirigeants d
+  LEFT JOIN fermes f ON d.id=f.id_dirigeant
+  GROUP BY d.id
+  ORDER BY $ordreChamp $ordreDirection
+";
 
 $resultats = mysqli_query($connection, $sql);
+
+if(!$resultats){
+  echo "ERREUR:" . mysqli_error($connection);
+  die;
+}
+
+// if(!){
+//   echo "<div class='alert alert-danger'>Erreur SQL:"
+//        .  mysqli_error($connection)
+//        . "</div>";
+// };
 ?>
 <a href="dirigeants_new.php">Nouveau dirigeant</a>
 <table class="table table-condensed table-striped table-hover">
@@ -58,6 +77,9 @@ $resultats = mysqli_query($connection, $sql);
         <a href="?order=id_adresse&amp;direction=ASC">+</a>
         <a href="?order=id_adresse&amp;direction=DESC">-</a>
       </th>
+      <th>
+        Nombre de fermes
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -71,9 +93,16 @@ $resultats = mysqli_query($connection, $sql);
       ?>
       <tr>
         <td>
+          <!-- Actions -->
+          <?php
+          if($ligne['nb_fermes'] === "0"):
+          ?>
           <a href="dirigeants_delete.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
             <span class="glyphicon glyphicon-trash"></span>
           </a>
+          <?php
+          endif;
+          ?>
           <a href="dirigeants_edit.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
@@ -84,6 +113,7 @@ $resultats = mysqli_query($connection, $sql);
         <td><?= $ligne['email'] ?></td>
         <td><?= $ligne['tel'] ?></td>
         <td><?= $ligne['id_adresse'] ?></td>
+        <td><?= $ligne['nb_fermes'] ?></td>
       </tr>
       <?php
       endwhile;
