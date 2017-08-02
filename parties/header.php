@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,6 +34,11 @@
             <li><a href="adresses.php">Adresses</a></li>
             <li><a href="employes.php">Employes</a></li>
             <li><a href="poulets.php">Poulets</a></li>
+            <?php if(!utilisateurEstIdentifie()): ?>
+              <li><a href="login.php">Connexion</a></li>
+            <?php else: ?>
+              <li><a href="logout.php">Déconnexion</a></li>
+            <?php endif; ?>
           </ul>
         </div>
       </div>

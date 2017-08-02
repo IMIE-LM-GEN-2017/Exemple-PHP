@@ -73,3 +73,19 @@ function executerRequete($connection, $requeteSql){
   }
   return $resultat;
 }
+
+
+function utilisateurEstIdentifie(){
+  return isset($_SESSION)
+         && isset($_SESSION['utilisateur'])
+         && isset($_SESSION['utilisateur']['id']);
+}
+
+function userInfo($champ){
+  if(isset($_SESSION)
+         && isset($_SESSION['utilisateur'])
+         && isset($_SESSION['utilisateur'][$champ])){
+    return $_SESSION['utilisateur'][$champ];
+  }
+  return null;
+}

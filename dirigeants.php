@@ -93,17 +93,21 @@ if(!$resultats){
         <td>
           <!-- Actions -->
           <?php
-          if($ligne['nb_fermes'] === "0"):
-          ?>
-          <a href="dirigeants_delete.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
-            <span class="glyphicon glyphicon-trash"></span>
-          </a>
+          if($ligne['id'] === userInfo('id')):
+            if($ligne['nb_fermes'] === "0"):
+            ?>
+            <a href="dirigeants_delete.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+            <?php
+            endif;
+            ?>
+            <a href="dirigeants_edit.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
           <?php
           endif;
           ?>
-          <a href="dirigeants_edit.php?id=<?= $ligne['id']?>" class="btn btn-link btn-xs">
-            <span class="glyphicon glyphicon-pencil"></span>
-          </a>
         </td>
         <td><?= $ligne['id'] ?></td>
         <td><?= $ligne['nom'] ?></td>

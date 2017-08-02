@@ -175,3 +175,4 @@ UNLOCK TABLES;
 -- Dump completed on 2017-07-31 13:22:46
 
 ALTER TABLE `dirigeants` ADD `mdp` VARCHAR(50) NOT NULL AFTER `id_adresse`;
+ALTER TABLE `dirigeants` ADD UNIQUE(`email`);
