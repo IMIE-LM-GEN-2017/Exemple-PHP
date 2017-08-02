@@ -22,7 +22,7 @@ $ordreDirection = $ordreDeTri[1];
 //$sql = "SELECT d.id, d.nom, d.prenom, d.email, d.tel, d.id_adresse, count(f.id) as nb_fermes FROM dirigeants d LEFT JOIN fermes f ON d.id=f.id_dirigeant GROUP BY d.id ORDER BY $ordreChamp $ordreDirection";
 
 $sql="
-  SELECT d.id, d.nom, d.prenom, d.id_adresse, d.tel, d.email, count(f.id) nb_fermes
+  SELECT d.id, d.nom, d.prenom, d.mdp, d.id_adresse, d.tel, d.email, count(f.id) nb_fermes
   FROM dirigeants d
   LEFT JOIN fermes f ON d.id=f.id_dirigeant
   GROUP BY d.id
@@ -36,11 +36,6 @@ if(!$resultats){
   die;
 }
 
-// if(!){
-//   echo "<div class='alert alert-danger'>Erreur SQL:"
-//        .  mysqli_error($connection)
-//        . "</div>";
-// };
 ?>
 <a href="dirigeants_new.php">Nouveau dirigeant</a>
 <table class="table table-condensed table-striped table-hover">
@@ -71,6 +66,9 @@ if(!$resultats){
         tel
         <a href="?order=tel&amp;direction=ASC">+</a>
         <a href="?order=tel&amp;direction=DESC">-</a>
+      </th>
+      <th>
+        mdp
       </th>
       <th>
         id_adresse
@@ -112,6 +110,7 @@ if(!$resultats){
         <td><?= $ligne['prenom'] ?></td>
         <td><?= $ligne['email'] ?></td>
         <td><?= $ligne['tel'] ?></td>
+        <td><?= $ligne['mdp'] ?></td>
         <td><?= $ligne['id_adresse'] ?></td>
         <td><?= $ligne['nb_fermes'] ?></td>
       </tr>

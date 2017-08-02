@@ -15,28 +15,33 @@ $testDuFormulaire = verifierFormulaire(['nom', 'prenom', 'email', 'tel', 'id_adr
 if($testDuFormulaire === false){
   echo "C'est faux";
 } elseif($testDuFormulaire === true) {
-  echo "Le formulaire est valide.";
-  // traitement et enregistrement.
-  $sql="INSERT INTO dirigeants (nom, prenom, email, tel, id_adresse)
-        VALUES ('" . mysqli_real_escape_string($connection, $_POST['nom']) . "',
-                '" . mysqli_real_escape_string($connection, $_POST['prenom']) . "',
-                '" . mysqli_real_escape_string($connection, $_POST['email']) . "',
-                '" . mysqli_real_escape_string($connection, $_POST['tel']) . "',
-                '" . mysqli_real_escape_string($connection, $_POST['id_adresse']) . "')";
-  var_dump($sql);
-  if(mysqli_query($connection, $sql)){
-    echo '<div class="alert alert-success">
-    L\'enregistrement a bien été effectué</div>';
+  if($_POST['mdp'] === $_POST['mdp2']){
+    echo "Le formulaire est valide.";
+    // traitement et enregistrement.
+    $sql="INSERT INTO dirigeants (nom, prenom, email, tel, mdp, id_adresse)
+          VALUES ('" . mysqli_real_escape_string($connection, $_POST['nom']) . "',
+                  '" . mysqli_real_escape_string($connection, $_POST['prenom']) . "',
+                  '" . mysqli_real_escape_string($connection, $_POST['email']) . "',
+                  '" . mysqli_real_escape_string($connection, $_POST['tel']) . "',
+                  '" . mysqli_real_escape_string($connection, md5($_POST['mdp'])) . "',
+                  '" . mysqli_real_escape_string($connection, $_POST['id_adresse']) . "')";
+    var_dump($sql);
+    if(mysqli_query($connection, $sql)){
+      echo '<div class="alert alert-success">
+      L\'enregistrement a bien été effectué</div>';
+    } else {
+      echo '<div class="alert alert-danger">
+      L\'enregistrement du dirigeant a échoué.<br>';
+      echo mysqli_error($connection);
+      echo "<pre>$sql</pre>";
+      echo '</div>';
+    }
   } else {
-    echo '<div class="alert alert-danger">
-    L\'enregistrement du dirigeant a échoué.<br>';
-    echo mysqli_error($connection);
-    echo "<pre>$sql</pre>";
-    echo '</div>';
+    echo alert('danger', "Les mots de passe ne correspondent pas.");
   }
 
   echo '<a href="dirigeants.php">Retours à la liste</a>';
-  echo '<a href="dirigeants_new.php">Ajouter une nouvelle dirigeant</a>';
+  echo '<a href="dirigeants_new.php">Ajouter un nouveau dirigeant</a>';
 
 } else {
   echo "Le formulaire n'a pas été envoyé";
@@ -71,6 +76,14 @@ if($testDuFormulaire !== true):
   <div class="form-group">
     <label for="tel">Téléphone</label>
     <input name="tel" type="text" class="form-control" id="tel" placeholder="Téléphone">
+  </div>
+  <div class="form-group">
+    <label for="mdp">Mot de passe</label>
+    <input required name="mdp" type="password" class="form-control" id="mdp" placeholder="Mot de passe">
+  </div>
+  <div class="form-group">
+    <label for="mdp2">Confirmation</label>
+    <input required name="mdp2" type="password" class="form-control" id="mdp2" placeholder="Confirmation du mot de passe">
   </div>
   <div class="form-group">
     <label for="id_adresse">Adresse</label>

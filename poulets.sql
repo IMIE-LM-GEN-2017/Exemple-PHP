@@ -173,3 +173,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-07-31 13:22:46
+
+ALTER TABLE `dirigeants` ADD `mdp` VARCHAR(50) NOT NULL AFTER `id_adresse`;
