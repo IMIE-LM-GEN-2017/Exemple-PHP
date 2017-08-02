@@ -21,6 +21,7 @@ if(isset($_POST['id']) && !empty($_POST['id'])){
   $testDuFormulaire = verifierFormulaire(
     ['nom', 'prenom', 'email', 'tel', 'id_adresse']
   );
+
   if($testDuFormulaire === false){
     echo 'Le formulaire est incomplet';
   }elseif($testDuFormulaire === true){
@@ -41,6 +42,35 @@ if(isset($_POST['id']) && !empty($_POST['id'])){
            ."<br><a href=\"dirigeants.php\">Retours à la liste</a>";
     }
   }
+
+  $testDuFormulaire = verifierFormulaire(
+    ['mdpa', 'mdp', 'mdp2']
+  );
+  if($testDuFormulaire === true){
+    // Vérification de l'ancien mot de passe
+    $sql = "SELECT id FROM dirigeants WHERE id="
+          .mysqli_real_escape_string($connection, $_POST['id'])
+          ." AND mdp='"
+          .mysqli_real_escape_string($connection, md5($_POST['mdpa']))
+          ."'";
+    $resultat = executerRequete($connection, $sql);
+    if($resultat !== false && mysqli_num_rows($resultat) === 1){
+      // on continue
+      if($_POST['mdp'] === $_POST['mdp2']){
+        $sql = "UPDATE dirigeants SET mdp='"
+              .mysqli_real_escape_string($connection, md5($_POST['mdp']))
+              ."'";
+        if(executerRequete($connection, $sql) !== false){
+          alert('success', 'Mot de passe mis à jour');
+        }
+      } else {
+        alert('danger', 'Les mots de passe ne correspondent pas.');
+      }
+    }else{
+      alert('danger', 'Mot de passe actuel incorrect');
+    }
+  }
+
 } elseif(isset($_GET['id']) && !empty($_GET['id'])) {
   // Est-ce qu'on a un id passé dans la querystring ?
   // Requete pour selectionner le dirigeant
@@ -113,6 +143,19 @@ if($afficherFormulaire === true):
         endwhile;
       ?>
     </select>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="mdpa">Mot de passe actuel</label>
+    <input name="mdpa" type="password" class="form-control" id="mdpa" placeholder="Mot de passe actuel">
+  </div>
+  <div class="form-group">
+    <label for="mdp">Mot de passe</label>
+    <input name="mdp" type="password" class="form-control" id="mdp" placeholder="Mot de passe">
+  </div>
+  <div class="form-group">
+    <label for="mdp2">Confirmation</label>
+    <input name="mdp2" type="password" class="form-control" id="mdp2" placeholder="Confirmation du mot de passe">
   </div>
   <input type="hidden" name="id" value="<?=$dirigeant['id'] ?>">
   <button type="submit" class="btn btn-primary">Enregistrer</button>

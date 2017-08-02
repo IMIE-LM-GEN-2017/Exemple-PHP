@@ -63,3 +63,13 @@ function verifierFormulaire($champs){
 function alert($type, $message){
   echo "<div class=\"alert alert-$type\">$message</div>";
 }
+
+
+function executerRequete($connection, $requeteSql){
+  $resultat = false;
+  if(!$resultat = mysqli_query($connection, $requeteSql)){
+    alert('danger', 'Erreur SQL: <br>'.mysqli_error($connection));
+    return false;
+  }
+  return $resultat;
+}

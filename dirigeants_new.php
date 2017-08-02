@@ -78,14 +78,6 @@ if($testDuFormulaire !== true):
     <input name="tel" type="text" class="form-control" id="tel" placeholder="Téléphone">
   </div>
   <div class="form-group">
-    <label for="mdp">Mot de passe</label>
-    <input required name="mdp" type="password" class="form-control" id="mdp" placeholder="Mot de passe">
-  </div>
-  <div class="form-group">
-    <label for="mdp2">Confirmation</label>
-    <input required name="mdp2" type="password" class="form-control" id="mdp2" placeholder="Confirmation du mot de passe">
-  </div>
-  <div class="form-group">
     <label for="id_adresse">Adresse</label>
     <select name="id_adresse" id="id_adresse" class="form-control">
       <?php
@@ -98,6 +90,15 @@ if($testDuFormulaire !== true):
         endwhile;
       ?>
     </select>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="mdp">Mot de passe</label>
+    <input required name="mdp" type="password" class="form-control" id="mdp" placeholder="Mot de passe">
+  </div>
+  <div class="form-group">
+    <label for="mdp2">Confirmation</label>
+    <input required name="mdp2" type="password" class="form-control" id="mdp2" placeholder="Confirmation du mot de passe">
   </div>
   <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
