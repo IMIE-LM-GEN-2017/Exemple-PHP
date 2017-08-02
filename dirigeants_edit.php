@@ -59,6 +59,8 @@ if(isset($_POST['id']) && !empty($_POST['id'])){
       if($_POST['mdp'] === $_POST['mdp2']){
         $sql = "UPDATE dirigeants SET mdp='"
               .mysqli_real_escape_string($connection, md5($_POST['mdp']))
+              ."' WHERE id='"
+              .mysqli_real_escape_string($connection, $_POST['id']))
               ."'";
         if(executerRequete($connection, $sql) !== false){
           alert('success', 'Mot de passe mis à jour');
