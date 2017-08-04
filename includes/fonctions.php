@@ -68,7 +68,7 @@ function alert($type, $message){
 function executerRequete($connection, $requeteSql){
   $resultat = false;
   if(!$resultat = mysqli_query($connection, $requeteSql)){
-    alert('danger', 'Erreur SQL: <br>'.mysqli_error($connection));
+    alert('danger', 'Erreur SQL: <br>'.mysqli_error($connection).'<pre>'.$requeteSql.'</pre>');
     return false;
   }
   return $resultat;
